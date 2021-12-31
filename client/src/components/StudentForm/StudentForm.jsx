@@ -17,6 +17,7 @@ const StudentForm = ({
     firstName: Yup.string().required(),
     lastName: Yup.string().required(),
     age: Yup.number().required().min(0).max(100),
+    subjects: Yup.array().of(Yup.string()).required().min(1),
     // subject: Yup.array().required(), ????
     // https://github.com/jquense/yup
     email: Yup.string().email().required(),

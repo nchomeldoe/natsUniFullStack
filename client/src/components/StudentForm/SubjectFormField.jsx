@@ -8,6 +8,7 @@ import {
   Select,
   Chip,
   Box,
+  FormHelperText,
 } from "@mui/material";
 
 const SubjectFormField = ({ name, label, helpMessage }) => {
@@ -25,11 +26,16 @@ const SubjectFormField = ({ name, label, helpMessage }) => {
     "Photography",
   ];
 
+  const [touched, setTouched] = useState(false);
+
   return (
     <>
       <Field name={name}>
         {({ field, form, meta }) => (
-          <FormControl sx={{ mb: 1, minWidth: 250, maxWidth: 350 }}>
+          <FormControl
+            sx={{ mb: 1, minWidth: 250, maxWidth: 350 }}
+            error={meta.error && touched}
+          >
             <InputLabel id="subjects-label">{label}</InputLabel>
             <Select
               labelId="subjects-label"
@@ -39,6 +45,7 @@ const SubjectFormField = ({ name, label, helpMessage }) => {
               onChange={(e) => {
                 form.setFieldValue("subjects", e.target.value);
               }}
+              onClose={() => setTouched(true)}
               input={
                 <OutlinedInput id="select-multiple-chip" label="Subjects" />
               }
@@ -56,6 +63,9 @@ const SubjectFormField = ({ name, label, helpMessage }) => {
                 </MenuItem>
               ))}
             </Select>
+            {meta.error && touched ? (
+              <FormHelperText>{helpMessage}</FormHelperText>
+            ) : null}
           </FormControl>
         )}
       </Field>
