@@ -10,7 +10,7 @@ import SubjectFormField from "./SubjectFormField";
 const StudentForm = ({
   initialValues,
   handleSubmit,
-  typeOfForm,
+  isExistingStudent,
   studentId,
 }) => {
   const validationSchema = Yup.object().shape({
@@ -18,8 +18,6 @@ const StudentForm = ({
     lastName: Yup.string().required(),
     age: Yup.number().required().min(0).max(100),
     subjects: Yup.array().of(Yup.string()).required().min(1),
-    // subject: Yup.array().required(), ????
-    // https://github.com/jquense/yup
     email: Yup.string().email().required(),
   });
 
@@ -100,13 +98,13 @@ const StudentForm = ({
                 type="submit"
                 disabled={isSubmitting}
               >
-                Submit
+                {isExistingStudent ? "Update" : "Create"}
               </Button>
               <Button variant="outlined" onClick={refreshPage}>
                 Reset
               </Button>
             </div>
-            {typeOfForm === "Existing Student" ? (
+            {isExistingStudent ? (
               <div>
                 <Button
                   onClick={deleteStudent}

@@ -27,7 +27,7 @@ const StudentView = () => {
       }
     };
     fetchStudentData();
-  }, []);
+  }, [studentId]);
 
   const handleSubmit = async (values) => {
     try {
@@ -66,7 +66,7 @@ const StudentView = () => {
           <StudentForm
             initialValues={student}
             handleSubmit={handleSubmit}
-            typeOfForm={"Existing Student"}
+            isExistingStudent={true}
             studentId={studentId}
           />
         </Container>

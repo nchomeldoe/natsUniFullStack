@@ -3,7 +3,6 @@ import { Container, Typography, Stack } from "@mui/material";
 import { navigate } from "@reach/router";
 
 import StudentForm from "../StudentForm/StudentForm";
-import SubjectFormField from "../StudentForm/SubjectFormField";
 
 const NewStudent = () => {
   const initialValues = {
@@ -47,15 +46,8 @@ const NewStudent = () => {
         <StudentForm
           initialValues={initialValues}
           handleSubmit={handleSubmit}
-          typeOfForm={"New Student"}
         />
       </Container>
-      {/* <Container>
-        <Stack direction="column" spacing={2} sx={{position: "relative", top: "200px", alignItems:"center"}}>
-        <SubjectFormField />
-            </Stack>
-            
-        </Container> */}
     </>
   );
 };
