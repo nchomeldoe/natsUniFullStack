@@ -1,14 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Container, Typography, Stack } from "@mui/material";
 import { useMatch } from "@reach/router";
 import Loader from "react-loader-spinner";
 import { navigate } from "@reach/router";
 
 import StudentForm from "../StudentForm/StudentForm";
+import { NotificationContext } from "../../context/NotificationProvider";
 
 const StudentView = () => {
   const { studentId } = useMatch("/student/:studentId");
   const [student, setStudent] = useState(null);
+  const { setSnack } = useContext(NotificationContext);
 
   useEffect(() => {
     const fetchStudentData = async () => {
@@ -23,7 +25,7 @@ const StudentView = () => {
         const studentData = data.student;
         setStudent(studentData);
       } catch (err) {
-        console.err(err);
+        console.error(err);
       }
     };
     fetchStudentData();
@@ -43,12 +45,28 @@ const StudentView = () => {
         }
       );
       if (!res.ok) {
+        setSnack({
+          // handle backend errors
+          message: "Sorry, there was an error! Please try again.",
+          severity: "error",
+          open: true,
+        });
         throw res;
       } else {
+        setSnack({
+          message: `${values.firstName} ${values.lastName} has been updated!`,
+          severity: "success",
+          open: true,
+        });
         navigate(`/`);
       }
     } catch (err) {
-      console.err(err);
+      setSnack({
+        message: "Sorry, there was an error! Please try again.",
+        severity: "error",
+        open: true,
+      });
+      console.error(err);
     }
   };
 

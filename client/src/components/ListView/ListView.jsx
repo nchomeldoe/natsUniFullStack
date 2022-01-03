@@ -18,7 +18,7 @@ const ListView = () => {
         const studentData = data.students;
         setStudents(studentData);
       } catch (err) {
-        console.err(err);
+        console.error(err);
       }
     };
     fetchStudents();

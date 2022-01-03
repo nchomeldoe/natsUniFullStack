@@ -1,10 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Container, Typography, Stack } from "@mui/material";
 import { navigate } from "@reach/router";
 
 import StudentForm from "../StudentForm/StudentForm";
+import { NotificationContext } from "../../context/NotificationProvider";
 
 const NewStudent = () => {
+  const { setSnack } = useContext(NotificationContext);
+
   const initialValues = {
     firstName: "",
     lastName: "",
@@ -24,12 +27,28 @@ const NewStudent = () => {
         body: JSON.stringify(values),
       });
       if (!res.ok) {
+        setSnack({
+          // handle backend errors
+          message: "Sorry, there was an error! Please try again.",
+          severity: "error",
+          open: true,
+        });
         throw res;
       } else {
+        setSnack({
+          message: `${values.firstName} ${values.lastName} has been created!`,
+          severity: "success",
+          open: true,
+        });
         navigate(`/`);
       }
     } catch (err) {
-      console.err(err);
+      setSnack({
+        message: "Sorry, there was an error! Please try again.",
+        severity: "error",
+        open: true,
+      });
+      console.error(err);
     }
   };
 

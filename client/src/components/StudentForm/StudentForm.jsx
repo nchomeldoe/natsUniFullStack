@@ -37,7 +37,7 @@ const StudentForm = ({
         navigate(`/`);
       }
     } catch (err) {
-      console.err(err);
+      console.error(err);
     }
   };
 
