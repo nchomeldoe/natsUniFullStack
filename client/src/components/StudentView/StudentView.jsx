@@ -2,7 +2,6 @@ import React, { useEffect, useState, useContext } from "react";
 import { Container, Typography, Stack } from "@mui/material";
 import { useMatch } from "@reach/router";
 import Loader from "react-loader-spinner";
-import { navigate } from "@reach/router";
 
 import StudentForm from "../StudentForm/StudentForm";
 import { NotificationContext } from "../../context/NotificationProvider";
@@ -53,12 +52,14 @@ const StudentView = () => {
         });
         throw res;
       } else {
+        const data = await res.json();
+        const updatedStudentData = data.newStudent;
+        setStudent(updatedStudentData);
         setSnack({
           message: `${values.firstName} ${values.lastName} has been updated!`,
           severity: "success",
           open: true,
         });
-        navigate(`/`);
       }
     } catch (err) {
       setSnack({

@@ -35,12 +35,14 @@ const NewStudent = () => {
         });
         throw res;
       } else {
+        const data = await res.json();
+        const studentId = data.student.id;
         setSnack({
           message: `${values.firstName} ${values.lastName} has been created!`,
           severity: "success",
           open: true,
         });
-        navigate(`/`);
+        navigate(`/student/${studentId}`);
       }
     } catch (err) {
       setSnack({
