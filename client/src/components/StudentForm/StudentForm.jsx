@@ -1,8 +1,7 @@
 import { Formik, Form } from "formik";
 import { Box, Button } from "@mui/material";
 import * as Yup from "yup";
-import React, { useState, useEffect } from "react";
-import { navigate } from "@reach/router";
+import React from "react";
 
 import FormField from "./FormField";
 import SubjectFormField from "./SubjectFormField";
@@ -24,22 +23,6 @@ const StudentForm = ({
 
   const refreshPage = () => {
     window.location.reload();
-  };
-
-  const deleteStudent = async () => {
-    try {
-      const res = await fetch(
-        `http://localhost:4000/api/students/${studentId}`,
-        { method: "DELETE" }
-      );
-      if (!res.ok) {
-        throw res;
-      } else {
-        navigate(`/`);
-      }
-    } catch (err) {
-      console.error(err);
-    }
   };
 
   return (
@@ -110,6 +93,7 @@ const StudentForm = ({
                 <div>
                   <DeleteModal
                     studentName={`${initialValues.firstName} ${initialValues.lastName}`}
+                    studentId={studentId}
                   />
                 </div>
               ) : null}
