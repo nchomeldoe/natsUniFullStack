@@ -53,13 +53,12 @@ const StudentView = () => {
         throw res;
       } else {
         const data = await res.json();
-        const updatedStudentData = data.newStudent;
-        setStudent(updatedStudentData);
         setSnack({
           message: `${values.firstName} ${values.lastName} has been updated!`,
           severity: "success",
           open: true,
         });
+        window.location.reload();
       }
     } catch (err) {
       setSnack({

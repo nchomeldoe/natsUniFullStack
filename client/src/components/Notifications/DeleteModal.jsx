@@ -4,17 +4,17 @@ import { navigate } from "@reach/router";
 
 import { NotificationContext } from "../../context/NotificationProvider";
 
-const DeleteModal = ({ studentName, studentId }) => {
+const DeleteModal = ({ studentName, studentId, isSubmitting }) => {
   const { setSnack } = useContext(NotificationContext);
 
   const [modalOpen, setModalOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const handleShowModal = () => setModalOpen(true);
   const handleCloseModal = () => setModalOpen(false);
 
   const handleDelete = async () => {
-    setIsSubmitting(true);
+    setIsDeleting(true);
     try {
       const res = await fetch(
         `http://localhost:4000/api/students/${studentId}`,
@@ -44,7 +44,7 @@ const DeleteModal = ({ studentName, studentId }) => {
       });
       console.error(err);
     }
-    setIsSubmitting(false);
+    setIsDeleting(false);
   };
 
   return (
@@ -54,6 +54,7 @@ const DeleteModal = ({ studentName, studentId }) => {
         color="error"
         sx={{ mr: 1 }}
         onClick={handleShowModal}
+        disabled={isSubmitting}
       >
         Delete
       </Button>
@@ -63,21 +64,21 @@ const DeleteModal = ({ studentName, studentId }) => {
           handleCloseModal();
         }}
       >
-        <DialogTitle>
-          Are you sure you want to delete {studentName}?
-        </DialogTitle>
+        <DialogTitle>Delete {studentName}?</DialogTitle>
         <DialogActions>
           <Button
-            color="primary"
+            variant="outlined"
+            color="error"
+            sx={{ mr: 1 }}
             onClick={handleDelete}
-            disabled={isSubmitting}
+            disabled={isDeleting}
           >
             Delete
           </Button>
           <Button
+            variant="outlined"
             onClick={handleCloseModal}
-            color="secondary"
-            disabled={isSubmitting}
+            disabled={isDeleting}
           >
             Cancel
           </Button>

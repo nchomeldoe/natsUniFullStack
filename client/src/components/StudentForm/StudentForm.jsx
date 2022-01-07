@@ -32,7 +32,7 @@ const StudentForm = ({
         onSubmit={handleSubmit}
         validationSchema={validationSchema}
       >
-        {({ isSubmitting }) => (
+        {({ isSubmitting, dirty, isValid }) => (
           <Form>
             <Box
               sx={{
@@ -81,11 +81,15 @@ const StudentForm = ({
                   variant="contained"
                   sx={{ mr: 1, mb: 1 }}
                   type="submit"
-                  disabled={isSubmitting}
+                  disabled={isSubmitting || !dirty || !isValid}
                 >
                   {isExistingStudent ? "Update" : "Create"}
                 </Button>
-                <Button variant="outlined" onClick={refreshPage}>
+                <Button
+                  variant="outlined"
+                  onClick={refreshPage}
+                  disabled={isSubmitting || !dirty}
+                >
                   Reset
                 </Button>
               </div>
@@ -94,6 +98,7 @@ const StudentForm = ({
                   <DeleteModal
                     studentName={`${initialValues.firstName} ${initialValues.lastName}`}
                     studentId={studentId}
+                    isSubmitting={isSubmitting}
                   />
                 </div>
               ) : null}
